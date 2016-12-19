@@ -1,1 +1,6 @@
 # LED-Rotation-Display
+
+integrantes
+RENZO COCHA
+ANDRES SALTOS
+ALEJANDRO TIRADO
