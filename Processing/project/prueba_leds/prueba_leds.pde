@@ -6,8 +6,7 @@ Arduino arduino;
 int receptor = 12;
 int ledPin=13;
 int i = 0, j = 0, contLetra = 0;
-int t = 1700;
-int val;
+int t = 1;
 long tiempo;
 boolean[][] leds = new boolean[40][10];
 String texto = "";
@@ -20,7 +19,6 @@ void setup() {
   background(#9BDDFF);
   //Configuracion de pines
   arduino = new Arduino(this, Arduino.list()[0], 57600); //[Configurar puerto y velocidad de la comunicacion
-  arduino.pinMode(1, Arduino.OUTPUT);
   arduino.pinMode(2, Arduino.OUTPUT);
   arduino.pinMode(3, Arduino.OUTPUT);
   arduino.pinMode(4, Arduino.OUTPUT);
@@ -39,8 +37,6 @@ void setup() {
 }
 
 void draw() {
-  val = arduino.analogRead(receptor);
-
   //quad(20,20,width-20,20,width-20,height-20,20,height-20); //Dibuja un cuadrado
   fill(#ffffff); //Color del relleno
   stroke(0); //Color de la linea de contorno
@@ -86,26 +82,24 @@ void draw() {
   fill(#000000);
   textSize(25);
   text(texto, 55, 340);
+  prenderLeds();
 }
 
 
 
 void keyPressed() {
-  while (val < 200) {
-    if (contLetra < 6) {
-      if (key >='A' && key <= 'Z') {
-        texto += key;
-        imprimirLetra(key);
-        contLetra++;
-      } else if (key == 'B') {
-        texto += key;
-        imprimirLetra(key);
-        contLetra++;
-      }
+  if (contLetra < 6) {
+    if (key >='A' && key <= 'Z') {
+      texto += key;
+      imprimirLetra(key);
+      contLetra++;
+    } else if (key == 'B') {
+      texto += key;
+      imprimirLetra(key);
+      contLetra++;
     }
-    println(texto);
-    val=arduino.analogRead(receptor);
   }
+  println(texto);
 }
 
 void imprimirLetra(char letra) {
@@ -114,36 +108,30 @@ void imprimirLetra(char letra) {
     dibujarFila(5, 5);
     dibujarCol(0, 10);
     dibujarCol(4, 10);
-    A();
   } else if (letra == 'B') {
     dibujarFila(0, 5);
     dibujarFila(5, 5);
     dibujarFila(9, 5);
     dibujarCol(0, 10);
     dibujarCol(4, 10);
-    B();
   } else if (letra == 'C') {
     dibujarFila(0, 5);
     dibujarFila(9, 5);
     dibujarCol(0, 10);
-    C();
   } else if (letra == 'D') {
     dibujarFila(0, 4);
     dibujarFila(9, 4);
     dibujarCol(0, 10);
     dibujarCol(4, 9);
-    D();
   } else if (letra == 'E') {
     dibujarFila(0, 4);
     dibujarFila(5, 4);
     dibujarFila(9, 4);
     dibujarCol(0, 10);
-    E();
   } else if (letra == 'F') {
     dibujarFila(0, 4);
     dibujarFila(5, 3);
     dibujarCol(0, 10);
-    Fa();
   } else if (letra == 'G') {
     dibujarFila(0, 5);
     dibujarFila(9, 4);
@@ -155,22 +143,18 @@ void imprimirLetra(char letra) {
     dibujarLed((contLetra * 6)+4, 6);
     dibujarLed((contLetra * 6)+4, 7);
     dibujarLed((contLetra * 6)+4, 8);
-    G();
   } else if (letra == 'H') {
     dibujarFila(5, 4);
     dibujarCol(0, 10);
     dibujarCol(4, 10);
-    H();
   } else if (letra == 'I') {
     dibujarFila(0, 5);
     dibujarFila(9, 5);
     dibujarCol(2, 10);
-    I();
   } else if (letra == 'J') {
     dibujarFila(0, 5);
     dibujarFila(9, 2);
     dibujarCol(2, 10);
-    J();
   } else if (letra == 'K') {
     dibujarCol(0, 10);
     dibujarCol(4, 4);
@@ -180,18 +164,15 @@ void imprimirLetra(char letra) {
     dibujarLed((contLetra * 6)+4, 7);
     dibujarLed((contLetra * 6)+4, 8);
     dibujarLed((contLetra * 6)+4, 9);
-    K();
   } else if (letra == 'L') {
     dibujarFila(9, 5);
     dibujarCol(0, 10);
-    L();
   } else if (letra == 'M') {
     dibujarCol(0, 10);
     dibujarCol(4, 10);
     dibujarLed((contLetra * 6)+1, 1);
     dibujarLed((contLetra * 6)+2, 2);
     dibujarLed((contLetra * 6)+3, 1);
-    M();
   } else if (letra == 'N') {
     dibujarCol(0, 10);
     dibujarCol(4, 10);
@@ -205,19 +186,16 @@ void imprimirLetra(char letra) {
     dibujarLed((contLetra * 6)+3, 6);
     dibujarLed((contLetra * 6)+3, 7);
     dibujarLed((contLetra * 6)+3, 8);
-    N();
   } else if (letra == 'O') {
     dibujarFila(0, 5);
     dibujarFila(9, 2);
     dibujarCol(0, 10);
     dibujarCol(4, 10);
-    O();
   } else if (letra == 'P') {
     dibujarFila(0, 4);
     dibujarFila(4, 4);
     dibujarCol(0, 10);
     dibujarCol(4, 5);
-    P();
   } else if (letra == 'Q') {
     dibujarFila(0, 4);
     dibujarFila(8, 4);
@@ -225,7 +203,6 @@ void imprimirLetra(char letra) {
     dibujarCol(3, 9);
     dibujarLed((contLetra * 6)+2, 7);
     dibujarLed((contLetra * 6)+4, 9);
-    Q();
   } else if (letra == 'R') {
     dibujarFila(0, 4);
     dibujarFila(4, 4);
@@ -236,7 +213,6 @@ void imprimirLetra(char letra) {
     dibujarLed((contLetra * 6)+4, 7);
     dibujarLed((contLetra * 6)+4, 8);
     dibujarLed((contLetra * 6)+4, 9);
-    R();
   } else if (letra == 'S') {
     dibujarFila(0, 5);
     dibujarFila(4, 5);
@@ -246,23 +222,19 @@ void imprimirLetra(char letra) {
     dibujarLed((contLetra * 6)+4, 6);
     dibujarLed((contLetra * 6)+4, 7);
     dibujarLed((contLetra * 6)+4, 8);
-    S();
   } else if (letra == 'T') {
     dibujarFila(0, 5);
     dibujarCol(2, 10);
-    T();
   } else if (letra == 'U') {
     dibujarFila(9, 5);
     dibujarCol(0, 10);
     dibujarCol(4, 10);
-    U();
   } else if (letra == 'V') {
     dibujarCol(0, 7);
     dibujarCol(4, 7);
     dibujarLed((contLetra * 6)+1, 7);
     dibujarLed((contLetra * 6)+2, 9);
     dibujarLed((contLetra * 6)+3, 7);
-    V();
   } else if (letra == 'W') {
     dibujarCol(0, 9);
     dibujarCol(4, 9);
@@ -270,7 +242,6 @@ void imprimirLetra(char letra) {
     dibujarLed((contLetra * 6)+2, 8);
     dibujarLed((contLetra * 6)+2, 7);
     dibujarLed((contLetra * 6)+3, 9);
-    W();
   } else if (letra == 'X') {
     dibujarCol(0, 3);
     dibujarCol(4, 3);
@@ -288,7 +259,6 @@ void imprimirLetra(char letra) {
     dibujarLed((contLetra * 6)+4, 7);
     dibujarLed((contLetra * 6)+4, 8);
     dibujarLed((contLetra * 6)+4, 9);
-    X();
   } else if (letra == 'Y') {
     dibujarCol(0, 3);
     dibujarCol(4, 3);
@@ -300,7 +270,6 @@ void imprimirLetra(char letra) {
     dibujarLed((contLetra * 6)+2, 7);
     dibujarLed((contLetra * 6)+2, 8);
     dibujarLed((contLetra * 6)+2, 9);
-    Y();
   } else if (letra == 'Z') {
     dibujarFila(0, 5);
     dibujarFila(9, 5);
@@ -312,7 +281,6 @@ void imprimirLetra(char letra) {
     dibujarLed((contLetra * 6)+1, 6);
     dibujarLed((contLetra * 6)+2, 5);
     dibujarLed((contLetra * 6)+3, 4);
-    Z();
   }
 }
 
@@ -632,6 +600,8 @@ void signal(int a, int b, int c, int d, int e, int f, int p, int k, int n)
 void apagarTodos(){
   fill(#ffffff);
   strokeWeight(1);
+  i=0;
+  j=0;
   while (j<10) {
     while (i < 40) {
       rect(50 + (i * 25), 50 + (j * 25), 20, 20, 20);
@@ -646,4 +616,64 @@ void apagarTodos(){
     }
   }
   contLetra = 0;
+}
+
+void prenderLeds(){
+  char[] letras = texto.toCharArray();
+  for(int i = 0; i < letras.length; i++){
+    switch(letras[i]){
+      case 'A': A();
+        break;
+      case 'B': B();
+        break;
+      case 'C': C();
+        break;
+      case 'D': D();
+        break;
+      case 'E': E();
+        break;
+      case 'F': Fa();
+        break;
+      case 'G': G();
+        break;
+      case 'H': H();
+        break;
+      case 'I': I();
+        break;
+      case 'J': J();
+        break;
+      case 'K': K();
+        break;
+      case 'L': L();
+        break;
+      case 'M': M();
+        break;
+      case 'N': N();
+        break;
+      case 'O': O();
+        break;
+      case 'P': P();
+        break;
+      case 'Q': Q();
+        break;
+      case 'R': R();
+        break;
+      case 'S': S();
+        break;
+      case 'T': T();
+        break;
+      case 'U': U();
+        break;
+      case 'V': V();
+        break;
+      case 'W': W();
+        break;
+      case 'X': X();
+        break;
+      case 'Y': Y();
+        break;
+      case 'Z': Z();
+        break;
+    }
+  }
 }
